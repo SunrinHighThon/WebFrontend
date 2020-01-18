@@ -49,24 +49,24 @@
 
     <v-app-bar app clipped-left color="#8b00ff" height="75px">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="topbar" />
-      <v-icon class="mx-4">fab fa-youtube</v-icon>
       <v-toolbar-title class="mr-12 align-center">
         <span class="title" style="display:flex">
           <img
             src="./assets/icon.png"
             alt
             width="55px"
-            style="margin-left:30px"
+            style="margin-left:10%"
+            class="icon"
           />
           <div
-            style="font-size:26px; font-weight:500; margin-left:10px; margin:auto; color:white"
+            style="font-size:26px; font-weight:500; margin:auto; color:white; width:200px"
           >
             복쓸복쓸
           </div>
         </span>
       </v-toolbar-title>
       <v-spacer />
-      <div style="margin-right:5%" class="topbarRight">
+      <div style="margin-right:4.8%" class="topbarRight">
         <v-btn
           style="margin-top:1.5px"
           @click.stop="SignUpDialog = true"
@@ -79,7 +79,9 @@
     </v-app-bar>
 
     <v-content style="padding: 0px">
-      <v-container class="fill-height" fluid>s</v-container>
+      <v-container class="fill-height" fluid>
+        <router-view />
+      </v-container>
       <v-dialog v-model="SignUpDialog" max-width="450">
         <div class="padding">
           <div style="color:black">로그인</div>
@@ -112,7 +114,7 @@
               >
                 <v-btn
                   rounded
-                  color="#ffffff"
+                  color="#CACBCB"
                   style="width:90%;"
                   class="fontcolor"
                   v-on:click="signinin()"
@@ -191,7 +193,7 @@
               >
                 <v-btn
                   rounded
-                  color="#ffffff"
+                  color="#CACBCB"
                   style="width:90%;"
                   class="fontcolor"
                   @click="signupup()"
@@ -207,6 +209,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   props: {
     source: String
@@ -220,7 +223,11 @@ export default {
           password: this.signin.password
         })
         .then(response => {
-          console.log(response);
+          if (response.data.result) {
+            console.log(response.data.userdata);
+          } else {
+            console.log(response.data.mes);
+          }
         });
     },
     signupup() {
@@ -268,6 +275,9 @@ export default {
     display: block !important;
   }
   .topbarRight {
+    display: none !important;
+  }
+  .icon {
     display: none !important;
   }
 }
