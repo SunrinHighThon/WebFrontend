@@ -2,12 +2,20 @@
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app clipped class="topbar">
       <v-list dense>
-        <v-list-item v-for="item in items" :key="item.text" link>
+        <v-list-item @click.stop="SignUpDialog = true; drawer= null">
           <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon>mdi-plus-circle-outline</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>{{ item.text }}</v-list-item-title>
+            <v-list-item-title>회원가입</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item @click.stop="SignInDialog = true; drawer= null">
+          <v-list-item-action>
+            <v-icon>mdi-plus-circle-outline</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>로그인</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -45,13 +53,17 @@
         </span>
       </v-toolbar-title>
       <v-spacer />
-      <div>
-        <div>로그인</div>
+      <div style="margin-right:5%" class="topbarRight">
+        <v-btn style="margin-top:1.5px" @click.stop="SignUpDialog = true" rounded color="#ffffff">
+          <span style="color:#8b00ff">로그인</span>
+        </v-btn>
       </div>
     </v-app-bar>
 
     <v-content style="padding: 0px">
       <v-container class="fill-height" fluid>s</v-container>
+      <v-dialog v-model="SignUpDialog" max-width="400" max-height="400">ㅇ</v-dialog>
+      <v-dialog v-model="SignInDialog" max-width="400" max-height="400">ㄴ</v-dialog>
     </v-content>
   </v-app>
 </template>
@@ -62,14 +74,10 @@ export default {
     source: String
   },
   data: () => ({
+    SignUpDialog: false,
+    SignInDialog: false,
     drawer: null,
-    items: [
-      { icon: "trending_up", text: "Most Popular" },
-      { icon: "subscriptions", text: "Subscriptions" },
-      { icon: "history", text: "History" },
-      { icon: "featured_play_list", text: "Playlists" },
-      { icon: "watch_later", text: "Watch Later" }
-    ],
+
     items2: [
       { picture: 28, text: "염태민" },
       { picture: 38, text: "송은우" },
@@ -87,11 +95,18 @@ export default {
   .topbar {
     display: block !important;
   }
+  .topbarRight {
+    display: none !important;
+  }
 }
 .topbar {
   display: none;
 }
 #inspire {
   background-color: #fafafa;
+}
+.topbarRight {
+  font-size: 18px;
+  display: flex;
 }
 </style>
